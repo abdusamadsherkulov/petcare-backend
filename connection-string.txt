@@ -1,0 +1,1 @@
+mongodb+srv://petcareAdmin:<petcareAdmin>@petcare.gz3e3gl.mongodb.net/?retryWrites=true&w=majority&appName=petcare
