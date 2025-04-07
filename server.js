@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
+const petRoutes = require('./routes/petRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // ✅ Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/pets', petRoutes);
 
 // ✅ Example test route
 app.get('/api/test', (req, res) => {

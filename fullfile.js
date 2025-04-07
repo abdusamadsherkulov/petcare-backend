@@ -26,6 +26,11 @@ const User = require('../models/User');
 const path = require('path');
 const fs = require('fs');
 
+// Utility function to generate JWT token
+const generateToken = id => {
+  return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+};
+
 // Register User
 const registerUser = async (req, res) => {
   const {name, surname, email, password} = req.body;
@@ -116,11 +121,6 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// Utility function to generate JWT token
-const generateToken = id => {
-  return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '1h'});
-};
-
 // Change password
 const changePassword = async (req, res) => {
   const userId = req.user.id; // assuming JWT middleware sets req.user
@@ -169,6 +169,7 @@ const protect = (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // console.log('Decoded token:', decoded);
       req.user = decoded; // Attach user to request object
       next();
     } catch (error) {
@@ -213,7 +214,6 @@ const protect = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.route('/profile').get(protect, getUserProfile);
 router.post('/register', registerUser);
 router.post('/login', authUser);
 router.get('/profile', protect, getUserProfile); // Protected route
