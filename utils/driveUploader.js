@@ -5,7 +5,7 @@ const path = require('path');
 
 // Auth
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, '../config/petcare-photo-195c5a91d401.json'), // 🔑 Your service account JSON file
+  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // 🔑 Your service account JSON file
   scopes: ['https://www.googleapis.com/auth/drive'],
 });
 
