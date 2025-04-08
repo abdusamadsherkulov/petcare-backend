@@ -5,7 +5,7 @@ const path = require('path');
 
 // Auth
 const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // 🔑 Your service account JSON file
+  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS),
   scopes: ['https://www.googleapis.com/auth/drive'],
 });
 
@@ -14,7 +14,6 @@ const uploadToDrive = async file => {
 
   const fileMetadata = {
     name: file.originalname,
-    parents: ['YOUR_FOLDER_ID'], // Replace with your Google Drive folder ID (optional)
   };
 
   const media = {

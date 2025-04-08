@@ -10,7 +10,7 @@ const upload = multer({dest: 'uploads/'});
 
 // Google Drive setup
 const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // your path
+  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS), // your path
   scopes: ['https://www.googleapis.com/auth/drive.file'],
 });
 
