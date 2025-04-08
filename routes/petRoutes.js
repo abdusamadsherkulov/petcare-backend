@@ -5,7 +5,7 @@ const {
   submitPetRehomingForm,
   getUserPets,
   upload,
-} = require('../controllers/petController');
+} = require('../controllers/petcontroller');
 const protect = require('../middleware/authMiddleware');
 
 router.post(
