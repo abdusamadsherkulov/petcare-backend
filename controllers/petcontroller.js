@@ -110,9 +110,34 @@ const getAllPets = async (req, res) => {
   }
 };
 
+const deletePet = async (req, res) => {
+  try {
+    const petId = req.params.petId;
+    const pet = await Pet.findById(petId);
+
+    if (!pet) {
+      return res.status(404).json({message: 'Pet not found'});
+    }
+
+    // Check if the user owns the pet
+    if (pet.owner.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({message: 'You can only delete your own pets'});
+    }
+
+    await Pet.findByIdAndDelete(petId);
+    res.status(200).json({message: 'Pet deleted successfully'});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Server error'});
+  }
+};
+
 module.exports = {
   submitPetRehomingForm,
   getUserPets,
   getAllPets,
+  deletePet,
   upload,
 };
