@@ -23,7 +23,9 @@ app.get('/proxy-image', async (req, res) => {
   const {url} = req.query;
   try {
     const response = await axios.get(url, {responseType: 'arraybuffer'});
-    res.set('Content-Type', response.headers['content-type']);
+    const contentType = response.headers['content-type'] || 'image/jpeg'; // Default to JPEG if unspecified
+    res.set('Content-Type', contentType);
+    res.set('Cache-Control', 'no-cache'); // Prevent caching issues
     res.send(response.data);
   } catch (error) {
     console.error('Error proxying image:', error);
