@@ -59,4 +59,21 @@ const clearCart = async (req, res) => {
   }
 };
 
-module.exports = {getCart, addToCart, clearCart};
+const removeFromCart = async (req, res) => {
+  const {petId} = req.body;
+  try {
+    const cart = await Cart.findOne({user: req.user.id});
+    if (!cart) {
+      return res.status(404).json({message: 'Cart not found'});
+    }
+    cart.items = cart.items.filter(item => item.pet.toString() !== petId);
+    await cart.save();
+    await cart.populate('items.pet');
+    res.status(200).json({message: 'Pet removed from cart', cart});
+  } catch (error) {
+    console.error('Error removing from cart:', error);
+    res.status(500).json({message: 'Server error'});
+  }
+};
+
+module.exports = {getCart, addToCart, clearCart, removeFromCart};
