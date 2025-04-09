@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const petRoutes = require('./routes/petRoutes');
 const axios = require('axios');
+const cartRoutes = require('./routes/cartRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get('/proxy-image', async (req, res) => {
 // ✅ Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/pets', petRoutes);
+app.use('/api/cart', cartRoutes);
 
 // ✅ Example test route
 app.get('/api/test', (req, res) => {
