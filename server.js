@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const petRoutes = require('./routes/petRoutes');
+const axios = require('axios');
 
 const app = express();
 
@@ -16,6 +17,19 @@ app.use(cors());
 
 // ✅ Middleware to parse JSON requests
 app.use(express.json());
+
+// Proxy endpoint for images
+app.get('/proxy-image', async (req, res) => {
+  const {url} = req.query;
+  try {
+    const response = await axios.get(url, {responseType: 'arraybuffer'});
+    res.set('Content-Type', response.headers['content-type']);
+    res.send(response.data);
+  } catch (error) {
+    console.error('Error proxying image:', error);
+    res.status(500).send('Image proxy failed');
+  }
+});
 
 // ✅ Routes
 app.use('/api/auth', authRoutes);
