@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   submitPetRehomingForm,
   getUserPets,
+  getAllPets,
   upload,
 } = require('../controllers/petcontroller');
 const protect = require('../middleware/authMiddleware');
@@ -15,5 +16,6 @@ router.post(
   submitPetRehomingForm
 );
 router.get('/my-pets', protect, getUserPets);
+router.get('/all-pets', getAllPets);
 
 module.exports = router;

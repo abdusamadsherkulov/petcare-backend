@@ -100,8 +100,19 @@ const getUserPets = async (req, res) => {
   }
 };
 
+const getAllPets = async (req, res) => {
+  try {
+    const pets = await Pet.find({status: 'Available'}); // Only show available pets
+    res.status(200).json(pets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Server error'});
+  }
+};
+
 module.exports = {
   submitPetRehomingForm,
   getUserPets,
+  getAllPets,
   upload,
 };
