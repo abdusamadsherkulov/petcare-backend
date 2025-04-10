@@ -134,10 +134,24 @@ const deletePet = async (req, res) => {
   }
 };
 
+const getPetById = async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.petId);
+    if (!pet) {
+      return res.status(404).json({message: 'Pet not found'});
+    }
+    res.status(200).json(pet);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Server error'});
+  }
+};
+
 module.exports = {
   submitPetRehomingForm,
   getUserPets,
   getAllPets,
+  getPetById,
   deletePet,
   upload,
 };

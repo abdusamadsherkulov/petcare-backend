@@ -5,6 +5,7 @@ const {
   submitPetRehomingForm,
   getUserPets,
   getAllPets,
+  getPetById,
   deletePet,
   upload,
 } = require('../controllers/petcontroller');
@@ -19,5 +20,6 @@ router.post(
 router.get('/my-pets', protect, getUserPets);
 router.get('/all-pets', getAllPets);
 router.delete('/delete/:petId', protect, deletePet);
+router.get('/:petId', getPetById);
 
 module.exports = router;
